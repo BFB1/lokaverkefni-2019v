@@ -1,0 +1,75 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.nav_bar {
+	display: flex;
+	position: fixed;
+ 	top: 0;
+ 	width: 100%;
+ 	border-bottom: solid 2px;
+ 	background-color: white;
+}
+.nav_links {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 1em;
+}
+.nav_links a {
+	margin-left: 1em;
+}
+.nav_title {
+	padding-left: 1em;
+}
+body {
+	margin: auto;
+	background-color: darkblue;
+	font-family: 'Quattrocento Sans', sans-serif;
+}
+header {
+	text-align: center;
+	background-color: darkcyan;
+	padding: 3em;
+	border-radius: 3em;
+}
+
+.login_form_style {
+	padding: 4em;
+	padding-top: 1em;
+	min-width: 17em;
+}
+.flex_row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 85%;
+	margin: auto;
+}
+.flex_row_child {
+	flex-basis: 25%;
+	flex-grow: 1;
+}
+.form_button {
+	-webkit-appearance: none;
+    -moz-appearance: none;
+	height: unset;
+	padding: 1em;
+	background-color: purple;
+	color: white;
+}
+input {
+	display: block;
+	margin: auto;
+	height: 2em;
+	width: 75%;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding: 1em;
+}
+a {
+	color: black;
+	text-decoration: none;
+}
