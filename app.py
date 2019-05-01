@@ -13,6 +13,14 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    for i in Account.query.all():
+        if i.get_id() == user_id:
+            return i
+    return None
+
+
 @app.route('/')
 def index():
     if current_user.is_authenticated:
