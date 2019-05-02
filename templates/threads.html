@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
+{% from 'helpers/form_helpers.html' import render_field %}
 
 {% block content %}
 <div class="wrapper">
     <section>
-        {% for thread in threads %}
-
-        {% endfor %}
+        <section>
+            <h2>Make a new thread</h2>
+            <form method="POST" id="thread_form" class="flex_row">
+                {{ form.csrf_token }}
+                {{ render_field(form.title) }}
+                {{ render_field(form.body) }}
+                {{ render_field(form.submit, class="flex_row_child form_button") }}
+            </form>
+        </section>
+        <section>
+            {% for thread in data %}
+                <a href="/thread/{{ thread.id }}"><h4>{{ thread.title }}</h4></a>
+            {% endfor %}
+        </section>
     </section>
 </div>
 {% endblock %}

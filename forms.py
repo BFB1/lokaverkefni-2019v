@@ -17,3 +17,11 @@ class RegistrationForm(FlaskForm):
     ])
     confirm = PasswordField('Repeat Password', [validators.data_required()])
     submit = SubmitField('Submit')
+
+
+class MakeThreadForm(FlaskForm):
+    title = StringField('Title', [validators.data_required()], render_kw={"placeholder": "Title"})
+    body = StringField('Body', render_kw={"placeholder": "Description"})
+    submit = SubmitField('Make Thread!')
+
+

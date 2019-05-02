@@ -21,10 +21,18 @@ def load_user(user_id):
     return None
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
+
     if current_user.is_authenticated:
-        return render_template('threads.html')
+        thread_form = MakeThreadForm()
+
+        if thread_form.validate_on_submit():
+            db.session.add(Thread(title=thread_form.title.data, description=thread_form.body.data,
+                                  accountId=current_user.get_id()))
+            db.session.commit()
+
+        return render_template('threads.html', data=Thread.query.all(), form=thread_form)
     return render_template('index.html')
 
 
