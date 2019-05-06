@@ -60,7 +60,10 @@ def thread(thread_id):
         return
 
     comment_form = MakeCommentForm()
-    print(data)
+    if comment_form.validate_on_submit():
+        db.session.add(Comment(body=comment_form.body.data, accountId=current_user.get_id(), threadId=thread_id))
+        db.session.commit()
+
     return render_template('thread.html', thread=data, form=comment_form)
 
 

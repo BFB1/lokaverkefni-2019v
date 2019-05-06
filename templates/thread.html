@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% from 'helpers/form_helpers.html' import render_field %}
+{% from 'helpers/render_comment.html' import render_comment %}
 
 {% block content %}
     <div class="wrapper">
@@ -16,11 +17,8 @@
             </section>
             <section>
                 {% for comment in thread.comments %}
-                    {% if comment.parentCommentId is none %}
-                        <h4>{{ comment.title }}</h4>
-                    {% endif %}
+                    {{ render_comment(comment) }}
                 {% endfor %}
-                
             </section>
         </section>
     </div>
