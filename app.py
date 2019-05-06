@@ -32,7 +32,7 @@ def index():
                                   accountId=current_user.get_id()))
             db.session.commit()
 
-        return render_template('threads.html', data=Thread.query.all(), form=thread_form)
+        return render_template('threads.html', data=db.session.query(Thread).join(Account).all(), form=thread_form)
     return render_template('index.html')
 
 

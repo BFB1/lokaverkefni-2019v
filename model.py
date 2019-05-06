@@ -52,6 +52,7 @@ class Thread(db.Model):
     locked = db.Column(db.Boolean, server_default='false')
 
     accountId = db.Column(db.Integer, db.ForeignKey('Account.id'), nullable=False)
+    owner = db.relationship(Account, backref='Threads', lazy=True)
 
     comments = db.relationship('Comment', backref='Thread', lazy=True)
 
