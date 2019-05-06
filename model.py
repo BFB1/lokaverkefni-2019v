@@ -62,10 +62,13 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    title = db.Column(db.String, nullable=True)
-    description = db.Column(db.String, nullable=False)
+    body = db.Column(db.String, nullable=False)
+
+    timeCreated = db.Column(db.DateTime, server_default=func.now())
+    timeModified = db.Column(db.DateTime, server_default=func.now(), server_onupdate=func.now())
+    modified = db.Column(db.Boolean, server_default='false', server_onupdate='true')
+
+    accountId = db.Column(db.Integer, db.ForeignKey('Account.id'), nullable=False)
+    owner = db.relationship(Account, backref='Comments', lazy=True)
 
     threadId = db.Column(db.Integer, db.ForeignKey('Thread.id'), nullable=True)
-
-    parent = db.relationship('Comment', remote_side=id, backref='children')
-    parentCommentId = db.Column(db.Integer, db.ForeignKey('Comment.id'), nullable=False)
