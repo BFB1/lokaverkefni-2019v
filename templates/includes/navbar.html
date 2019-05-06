@@ -1,7 +1,12 @@
 <nav class="nav_bar">
     <a class="nav_title" href="/"><h3>Sparktree</h3></a>
     <div class="nav_links">
-        <a href="{{ url_for('auth') }}"><h3>about</h3></a>
-        <a href="{{ url_for('auth') }}"><h3>login</h3></a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('profile', accountId=current_user.id) }}"><h3>{{ current_user.name }}</h3></a>
+            <a href="{{ url_for('logout') }}"><h3>logout</h3></a>
+            {% else %}
+            <a href="{{ url_for('auth') }}"><h3>about</h3></a>
+            <a href="{{ url_for('auth') }}"><h3>login</h3></a>
+        {% endif %}
     </div>
 </nav>

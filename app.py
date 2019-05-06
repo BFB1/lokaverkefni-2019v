@@ -67,6 +67,17 @@ def thread(thread_id):
     return render_template('thread.html', thread=data, form=comment_form)
 
 
+@app.route('/profile/<accountId>')
+def profile(accountId):
+    # TODO Maybe implement this some day?
+    return render_template('index.html')
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 if __name__ == '__main__':
