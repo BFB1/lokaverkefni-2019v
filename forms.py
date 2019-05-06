@@ -25,3 +25,8 @@ class MakeThreadForm(FlaskForm):
     submit = SubmitField('Make Thread!')
 
 
+class MakeCommentForm(FlaskForm):
+    body = StringField('Body', render_kw={"placeholder": "Speak your mind!"})
+    submit = SubmitField('Post comment!')
+
+

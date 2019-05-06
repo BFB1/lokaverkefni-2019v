@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, abort
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
+from sqlalchemy.exc import SQLAlchemyError
 from model import *
 from forms import *
 from os import environ
@@ -48,6 +49,21 @@ def auth():
                 return redirect('/')
 
     return render_template('auth.html', form=login_form, failed=True if request.method == 'POST' else False)
+
+
+@app.route('/thread/<thread_id>', methods=['GET', 'POST'])
+def thread(thread_id):
+    try:
+        data = Thread.query.filter_by(id=thread_id).first()
+    except SQLAlchemyError:
+        abort(404)
+        return
+
+    comment_form = MakeCommentForm()
+    print(data)
+    return render_template('thread.html', thread=data, form=comment_form)
+
+
 
 
 if __name__ == '__main__':

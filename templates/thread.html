@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% from 'helpers/form_helpers.html' import render_field %}
+
+{% block content %}
+    <div class="wrapper">
+        <section>
+            <h1>{{ thread.title }}</h1>
+            <h4>{{ thread.description }}</h4>
+            <section>
+                <h2>Make a new comment</h2>
+                <form method="POST" id="thread_form" class="flex_row">
+                    {{ form.csrf_token }}
+                    {{ render_field(form.body) }}
+                    {{ render_field(form.submit, class="flex_row_child form_button") }}
+                </form>
+            </section>
+            <section>
+                {% for comment in thread.comments %}
+                    {% if comment.parentCommentId is none %}
+                        <h4>{{ comment.title }}</h4>
+                    {% endif %}
+                {% endfor %}
+                
+            </section>
+        </section>
+    </div>
+{% endblock %}
