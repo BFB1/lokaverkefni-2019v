@@ -16,8 +16,8 @@
         <section>
             {% for thread in data %}
                 <h4>
-                    <a href="/thread/{{ thread.id }}">{{ thread.title }}</a> - By
-                    <a href="/profile/{{ thread.accountId }}">{{ thread.owner.username }}</a>
+                    <a href="{{ url_for('thread', thread_id=thread.id) }}">{{ thread.title }}</a> - By
+                    <a href="{{ url_for('profile', accountId=thread.owner.id) }}">{{ thread.owner.username }}</a>
                     - {{ thread.timeModified.strftime('%H:%M %d-%m-%Y') }}
                 </h4>
             {% endfor %}
