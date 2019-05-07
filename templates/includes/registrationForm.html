@@ -1,0 +1,13 @@
+<h2>Register</h2>
+<form method="POST" id="login_form">
+    {{ form.csrf_token }}
+    {{ render_field(form.username) }}
+    {{ render_field(form.realName) }}
+    {{ render_field(form.email) }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.confirm) }}
+    <div class="flex_row">
+        <a href="{{ url_for('auth') }}" class="flex_row_child form_button">Login</a>
+        {{ render_field(form.submit, class="flex_row_child form_button") }}
+    </div>
+</form>

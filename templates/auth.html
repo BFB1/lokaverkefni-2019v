@@ -5,16 +5,11 @@
 <div class="wrapper">
     <header class="index">
         <div class="login_form_style">
-            <h2>Login</h2>
-            <form method="POST" id="login_form">
-                {{ form.csrf_token }}
-                {{ render_field(form.username) }}
-                {{ render_field(form.password) }}
-                <div class="flex_row">
-                    <button class="flex_row_child form_button">Register</button>
-                    {{ render_field(form.submit, class="flex_row_child form_button") }}
-                </div>
-            </form>
+            {% if register %}
+                {% include 'includes/registrationForm.html' %}
+                {% else %}
+                {% include 'includes/loginForm.html' %}
+            {% endif %}
         </div>
     </header>
 </div>

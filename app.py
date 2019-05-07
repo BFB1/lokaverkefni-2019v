@@ -37,9 +37,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/auth', methods=['GET', 'POST'])
 def auth():
-
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = Account.query.filter_by(username=login_form.username.data).first()
@@ -47,8 +46,23 @@ def auth():
             if login_form.password.data == user.password:
                 login_user(user)
                 return redirect('/')
-
     return render_template('auth.html', form=login_form, failed=True if request.method == 'POST' else False)
+
+
+@app.route('/auth/register', methods=['GET', 'POST'])
+def register():
+    register_form = RegistrationForm()
+    if register_form.validate_on_submit():
+        try:
+            user = Account(username=register_form.username.data, name=register_form.realName.data,
+                                   email=register_form.email.data, password=register_form.password.data)
+            db.session.add(user)
+            db.session.commit()
+        except SQLAlchemyError:
+            return render_template('auth.html', form=register_form, register=True, failed=True)
+        login_user(user)
+        return redirect('/')
+    return render_template('auth.html', form=register_form, register=True, failed=False)
 
 
 @app.route('/thread/<thread_id>', methods=['GET', 'POST'])

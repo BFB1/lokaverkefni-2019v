@@ -1,5 +1,6 @@
 from wtforms import *
 from flask_wtf import FlaskForm
+from wtforms.fields.html5 import EmailField
 
 
 class LoginForm(FlaskForm):
@@ -9,13 +10,16 @@ class LoginForm(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', [validators.data_required()])
+    username = StringField('Username', [validators.data_required()], render_kw={"placeholder": "Username"})
+    realName = StringField('Name', [validators.data_required()], render_kw={"placeholder": "Name"})
+    email = EmailField('Email', [validators.data_required(), validators.email()], render_kw={"placeholder": 'Email'})
     password = PasswordField('Password', [
         validators.DataRequired(),
         validators.EqualTo('confirm', message='Passwords must match'),
         validators.Length(min=8)
-    ])
-    confirm = PasswordField('Repeat Password', [validators.data_required()])
+    ], render_kw={"placeholder": "Passphrase"})
+    confirm = PasswordField('Repeat Password', [validators.data_required()],
+                            render_kw={"placeholder": "Repeat Passphrase"})
     submit = SubmitField('Submit')
 
 
