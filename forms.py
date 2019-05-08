@@ -25,7 +25,7 @@ class RegistrationForm(FlaskForm):
 
 class MakeThreadForm(FlaskForm):
     title = StringField('Title', [validators.data_required()], render_kw={"placeholder": "Title"})
-    body = StringField('Body', render_kw={"placeholder": "Description"})
+    description = StringField('Body', render_kw={"placeholder": "Description"})
     submit = SubmitField('Make Thread!')
 
 

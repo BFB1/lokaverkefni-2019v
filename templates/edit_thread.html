@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% from 'helpers/form_helpers.html' import render_field %}
+
+{% block content %}
+<div class="thread_wrapper">
+    <section>
+        <section>
+            <h2>Edit thread</h2>
+            <form method="POST" id="thread_form" class="flex_row">
+                {{ form.csrf_token }}
+                {{ render_field(form.title) }}
+                {{ render_field(form.description) }}
+                {{ render_field(form.submit, class="flex_row_child form_button") }}
+            </form>
+        </section>
+    </section>
+</div>
+{% endblock %}

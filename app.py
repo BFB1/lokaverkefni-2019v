@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, abort
+from flask import Flask, render_template, request, redirect, abort, url_for
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from sqlalchemy.exc import SQLAlchemyError
 from model import *
@@ -29,7 +29,7 @@ def index():
         thread_form = MakeThreadForm()
 
         if thread_form.validate_on_submit():
-            db.session.add(Thread(title=thread_form.title.data, description=thread_form.body.data,
+            db.session.add(Thread(title=thread_form.title.data, description=thread_form.description.data,
                                   accountId=current_user.get_id()))
             db.session.commit()
 
@@ -79,6 +79,25 @@ def thread(thread_id):
         db.session.commit()
 
     return render_template('thread.html', thread=data, form=comment_form)
+
+
+@app.route('/thread/<thread_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_thread(thread_id):
+    try:
+        data = Thread.query.filter_by(id=thread_id).first()
+    except SQLAlchemyError:
+        abort(404)
+        return
+    if data:
+        if current_user.admin or current_user.id == data.owner.id:
+            edit_form = MakeThreadForm(obj=data)
+            if edit_form.validate_on_submit():
+                data.title = edit_form.title.data
+                data.description = edit_form.description.data
+                db.session.commit()
+                return redirect(url_for('thread', thread_id=data.id))
+            return render_template('edit_thread.html', form=edit_form)
 
 
 @app.route('/profile/<accountId>')
