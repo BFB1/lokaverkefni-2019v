@@ -33,7 +33,9 @@ def index():
                                   accountId=current_user.get_id()))
             db.session.commit()
 
-        return render_template('threads.html', data=db.session.query(Thread).join(Account).all(), form=thread_form)
+        return render_template('threads.html',
+                               data=db.session.query(Thread).join(Account).all()[::-1],
+                               form=thread_form)
     return render_template('index.html')
 
 
@@ -55,7 +57,7 @@ def register():
     if register_form.validate_on_submit():
         try:
             user = Account(username=register_form.username.data, name=register_form.realName.data,
-                                   email=register_form.email.data, password=register_form.password.data)
+                           email=register_form.email.data, password=register_form.password.data)
             db.session.add(user)
             db.session.commit()
         except SQLAlchemyError:
@@ -76,6 +78,7 @@ def thread(thread_id):
     comment_form = MakeCommentForm()
     if comment_form.validate_on_submit():
         db.session.add(Comment(body=comment_form.body.data, accountId=current_user.get_id(), threadId=thread_id))
+        data.timeModified = func.now()
         db.session.commit()
 
     return render_template('thread.html', thread=data, form=comment_form)

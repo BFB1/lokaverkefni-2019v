@@ -16,7 +16,7 @@
                 </form>
             </section>
             <section>
-                {% for comment in thread.comments %}
+                {% for comment in thread.comments[::-1] %}
                     {{ render_comment(comment) }}
                 {% endfor %}
             </section>
