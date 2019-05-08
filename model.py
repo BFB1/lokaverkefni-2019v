@@ -55,7 +55,7 @@ class Thread(db.Model):
     accountId = db.Column(db.Integer, db.ForeignKey('Account.id'), nullable=False)
     owner = db.relationship(Account, backref='Threads', lazy=True)
 
-    comments = db.relationship('Comment', backref='Thread', lazy=True)
+    comments = db.relationship('Comment', cascade="all,delete", backref='Thread', lazy=True)
 
 
 class Comment(db.Model):

@@ -92,15 +92,28 @@ def edit_thread(thread_id):
     except SQLAlchemyError:
         abort(404)
         return
-    if data:
-        if current_user.admin or current_user.id == data.owner.id:
-            edit_form = MakeThreadForm(obj=data)
-            if edit_form.validate_on_submit():
-                data.title = edit_form.title.data
-                data.description = edit_form.description.data
-                db.session.commit()
-                return redirect(url_for('thread', thread_id=data.id))
-            return render_template('edit_thread.html', form=edit_form)
+    if (current_user.admin or current_user.id == data.owner.id) and data:
+        edit_form = MakeThreadForm(obj=data)
+        if edit_form.validate_on_submit():
+            data.title = edit_form.title.data
+            data.description = edit_form.description.data
+            db.session.commit()
+            return redirect(url_for('thread', thread_id=data.id))
+        return render_template('edit_thread.html', form=edit_form)
+
+
+@app.route('/thread/<thread_id>/delete')
+@login_required
+def delete_thread(thread_id):
+    try:
+        data = Thread.query.filter_by(id=thread_id).first()
+    except SQLAlchemyError:
+        abort(404)
+        return
+    if (current_user.admin or current_user.id == data.owner.id) and data:
+        db.session.delete(data)
+        db.session.commit()
+    return redirect(url_for('index'))
 
 
 @app.route('/profile/<accountId>')

@@ -21,7 +21,7 @@
                     - {{ thread.timeModified.strftime('%H:%M %d-%m-%Y') }}
                     {% if current_user.admin or current_user.id == thread.owner.id  %}
                         - <a href="{{ url_for('edit_thread', thread_id=thread.id) }}" class="action_link">Edit</a>
-                        - <a href="" class="action_link">Delete</a>
+                        - <a href="{{ url_for('delete_thread', thread_id=thread.id) }}" class="action_link">Delete</a>
                     {% endif %}
                 </h4>
             {% endfor %}
