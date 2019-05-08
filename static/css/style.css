@@ -4,6 +4,10 @@
   align-items: center;
   height: 100vh;
 }
+.thread_wrapper {
+	max-width: 60em;
+	margin: 10em auto;
+}
 .nav_bar {
 	display: flex;
 	position: fixed;
@@ -76,4 +80,7 @@ a {
 }
 h4 a {
     color: white;
+}
+.center_text {
+	text-align: center;
 }

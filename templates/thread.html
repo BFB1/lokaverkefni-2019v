@@ -3,12 +3,12 @@
 {% from 'helpers/render_comment.html' import render_comment %}
 
 {% block content %}
-    <div class="wrapper">
+    <div class="thread_wrapper">
         <section>
             <h1>{{ thread.title }}</h1>
             <h4>{{ thread.description }}</h4>
             <section>
-                <h2>Make a new comment</h2>
+                <h3 class="center_text">Make a new comment</h3>
                 <form method="POST" id="thread_form" class="flex_row">
                     {{ form.csrf_token }}
                     {{ render_field(form.body) }}
