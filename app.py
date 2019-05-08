@@ -72,8 +72,10 @@ def thread(thread_id):
     try:
         data = Thread.query.filter_by(id=thread_id).first()
     except SQLAlchemyError:
-        abort(404)
+        abort(500)
         return
+    if data is None:
+        abort(404)
 
     comment_form = MakeCommentForm()
     if comment_form.validate_on_submit():
@@ -114,6 +116,26 @@ def delete_thread(thread_id):
         db.session.delete(data)
         db.session.commit()
     return redirect(url_for('index'))
+
+
+@app.route('/comment/<comment_id>/delete')
+@login_required
+def delete_comment(comment_id):
+    try:
+        data = Comment.query.filter_by(id=comment_id).first()
+    except SQLAlchemyError:
+        abort(500)
+        return  # Nothing is ever gonna reach here. But without it Pycharm yells at me.
+
+    if data and (current_user.admin or current_user.id == data.owner.id):
+        redirect_destination = data.Thread.id
+        db.session.delete(data)
+        db.session.commit()
+        return redirect(url_for('thread', thread_id=redirect_destination))
+    elif data:
+        return redirect(url_for('thread', thread_id=data.Thread.id))
+    else:
+        abort(404)
 
 
 @app.route('/profile/<accountId>')
