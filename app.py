@@ -118,6 +118,23 @@ def delete_thread(thread_id):
     return redirect(url_for('index'))
 
 
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_comment(comment_id):
+    try:
+        data = Comment.query.filter_by(id=comment_id).first()
+    except SQLAlchemyError:
+        abort(500)
+        return
+    if (current_user.admin or current_user.id == data.owner.id) and data:
+        edit_form = MakeCommentForm(obj=data)
+        if edit_form.validate_on_submit():
+            data.body = edit_form.body.data
+            db.session.commit()
+            return redirect(url_for('thread', thread_id=data.Thread.id))
+        return render_template('edit_comment.html', form=edit_form)
+
+
 @app.route('/comment/<comment_id>/delete')
 @login_required
 def delete_comment(comment_id):
