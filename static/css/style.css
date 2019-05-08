@@ -84,3 +84,6 @@ h4 a {
 .center_text {
 	text-align: center;
 }
+.action_link {
+	text-decoration: underline;
+}

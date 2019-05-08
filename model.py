@@ -12,6 +12,7 @@ class Account(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     name = db.Column(db.String, nullable=True)
     email = db.Column(db.String(254), unique=True, nullable=False)
+    admin = db.Column(db.Boolean, server_default='False')
 
     password = db.Column(db.String, nullable=False)
 

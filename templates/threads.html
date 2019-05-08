@@ -19,6 +19,10 @@
                     <a href="{{ url_for('thread', thread_id=thread.id) }}">{{ thread.title }}</a> - By
                     <a href="{{ url_for('profile', accountId=thread.owner.id) }}">{{ thread.owner.username }}</a>
                     - {{ thread.timeModified.strftime('%H:%M %d-%m-%Y') }}
+                    {% if current_user.admin or current_user.id == thread.owner.id  %}
+                        - <a href="" class="action_link">Edit</a>
+                        - <a href="" class="action_link">Delete</a>
+                    {% endif %}
                 </h4>
             {% endfor %}
         </section>
