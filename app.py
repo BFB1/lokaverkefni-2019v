@@ -92,7 +92,7 @@ def edit_thread(thread_id):
     try:
         data = Thread.query.filter_by(id=thread_id).first()
     except SQLAlchemyError:
-        abort(404)
+        abort(500)
         return
     if (current_user.admin or current_user.id == data.owner.id) and data:
         edit_form = MakeThreadForm(obj=data)
@@ -110,7 +110,7 @@ def delete_thread(thread_id):
     try:
         data = Thread.query.filter_by(id=thread_id).first()
     except SQLAlchemyError:
-        abort(404)
+        abort(500)
         return
     if (current_user.admin or current_user.id == data.owner.id) and data:
         db.session.delete(data)
