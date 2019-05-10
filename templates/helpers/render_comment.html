@@ -1,7 +1,7 @@
 {% macro render_comment(comment) %}
     <article>
         <h4>{{ comment.body }}
-            - By <a href="{{ url_for('profile', accountId=comment.owner.id) }}">{{ comment.owner.username }}</a>
+            - By <a href="/">{{ comment.owner.username }}</a>
             - {{ comment.timeModified.strftime('%H:%M %d-%m-%Y') }}
             {% if current_user.admin or current_user.id == comment.owner.id  %}
                 - <a href="{{ url_for('edit_comment', comment_id=comment.id) }}" class="action_link">Edit</a>

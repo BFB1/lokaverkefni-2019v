@@ -155,12 +155,6 @@ def delete_comment(comment_id):
         abort(404)
 
 
-@app.route('/profile/<accountId>')
-def profile(accountId):
-    # TODO Maybe implement this some day?
-    return render_template('index.html')
-
-
 @app.route("/logout")
 @login_required
 def logout():
