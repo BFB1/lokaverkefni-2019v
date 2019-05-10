@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="wrapper">
+    <header class="index">
+        <h1>{{ error }}</h1>
+        {% if message %}
+        {{ message }}
+        {% else %}
+        <h3>There was an error when handling your request</h3>
+        {% endif %}
+        <h4><a href="{{ url_for('index') }}" class="action_link">Return to safety</a></h4>
+    </header>
+</div>
+{% endblock %}

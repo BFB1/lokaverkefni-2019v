@@ -162,5 +162,23 @@ def logout():
     return redirect('/')
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.html', error=404, message='The resource you are looking for was not found'), 404
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('error.html', error=500, message='There was an error when handling your request'), 500
+
+
+@app.errorhandler(401)
+@app.errorhandler(403)
+def server_error(e):
+    return render_template('error.html', error=401, message='You are not authorized to access this page'), 401
+
+
+
+
 if __name__ == '__main__':
     app.run()
